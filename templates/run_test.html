@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Run A/B Test</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Run an A/B Test</h1>
+        <form method="post">
+            <div class="form-group">
+                <label>Element:</label>
+                <select name="element" class="form-control">
+                    {% for element in elements.keys() %}
+                        <option value="{{ element }}">{{ element.replace('_', ' ').title() }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Variant:</label>
+                <select name="variant" class="form-control" id="variantSelect"></select>
+            </div>
+            <div class="form-group">
+                <label>Days to Run:</label>
+                <input type="number" name="days" min="1" max="10" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Start Test</button>
+        </form>
+        <script>
+            /* eslint-disable */
+            const testElements = JSON.parse('{{ elements|tojson|safe }}') || {};
+
+            const elementSelect = document.querySelector('[name="element"]');
+            const variantSelect = document.getElementById('variantSelect');
+
+            function updateVariants() {
+                const selectedElement = elementSelect.value;
+                const variants = testElements[selectedElement] || {};
+                variantSelect.innerHTML = '';
+
+                for (const variant in variants) {
+                    const option = document.createElement('option');
+                    option.value = variant;
+                    option.textContent = variants[variant];
+                    variantSelect.appendChild(option);
+                }
+            }
+
+            elementSelect.addEventListener('change', updateVariants);
+            updateVariants(); // Initial population of variants
+            /* eslint-enable */
+        </script>
+    </div>
+</body>
+</html>

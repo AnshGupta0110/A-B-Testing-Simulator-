@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Game Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Day {{ day }} / {{ 30 }}</h1>
+        <p>Budget: ${{ budget }}</p>
+        <p>Conversion Rate: {{ "%.2f" % conversion_rate }}%</p>
+        <p>Total Revenue: ${{ total_revenue }}</p>
+        <a href="/run_test" class="btn btn-success">Run A/B Test</a>
+    </div>
+</body>
+</html>

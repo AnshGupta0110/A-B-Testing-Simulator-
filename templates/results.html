@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Results</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Test Results: {{ test.element }} - {{ test.variant }}</h1>
+        <p>Control Conversion Rate: {{ "%.2f" % control_rate }}%</p>
+        <p>Variant Conversion Rate: {{ "%.2f" % variant_rate }}%</p>
+        <p>P-Value: {{ "%.4f" % test.p_value }}</p>
+        <p>Days Run: {{ test.days }}</p>
+        <div id="chart"></div>
+        <form method="post" action="/implement_change">
+            <input type="hidden" name="test_id" value="{{ test_id }}">
+            <button type="submit" class="btn btn-success">Implement Change</button>
+            <a href="/game" class="btn btn-secondary">Back to Game</a>
+        </form>
+    </div>
+    <script>
+        var obj = { key: value };  
+        Plotly.newPlot('chart', graph.data, graph.layout);  
+    </script>
+</body>
+</html>
